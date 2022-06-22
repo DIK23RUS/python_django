@@ -48,6 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'dik23rus_board.middleware.filter_ip_middleware.FilterIPMiddleware',
+    'dik23rus_board.middleware.sleep_middleware.sleep_middleware',
+    'dik23rus_board.middleware.number_of_requests_middleware.number_of_requests',
 ]
 
 ROOT_URLCONF = 'dik23rus_board.urls'
