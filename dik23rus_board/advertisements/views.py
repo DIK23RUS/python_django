@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import View
+from advertisements.models import Advertisement
+import random
 
 
 # Create your views here.
@@ -44,12 +46,6 @@ def advertisement_categories(request, *args, **kwargs):
     return render(request, 'advertisement/categories.html', {'categories': categories})
 
 
-# def advertisement_regions(request, *args, **kwargs):
-#     regions = ['Краснодарский край', 'Ростовская область', 'Московская область', 'Республика Адыгея',
-#                'Новокубанский район']
-#     return render(request, 'advertisement/regions.html', {'regions': regions})
-
-
 class AdvertisementRegions(View):
     def get(self, request):
         regions = ['Краснодарский край', 'Ростовская область', 'Московская область', 'Республика Адыгея',
@@ -58,3 +54,12 @@ class AdvertisementRegions(View):
 
     def post(self, request):
         return HttpResponse('Регион успешно создан')
+
+
+class AdvertisementRandom(View):
+    def get(self, request):
+        advertisements = Advertisement.objects.all()
+        len_list = len(advertisements)
+        random_numb = random.randint(0, len_list - 1)
+        random_advertisement = advertisements[random_numb]
+        return render(request, 'advertisement/random.html', {'random_advertisement': random_advertisement})

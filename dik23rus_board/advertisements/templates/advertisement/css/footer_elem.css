@@ -32,3 +32,12 @@ a:hover {
     border-radius: 10px;
     padding: 10px;
 }
+
+.adv_datetime {
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    min-width: 70%;
+}
+
+
