@@ -11,17 +11,17 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='advertisement',
+            model_name='advertisements',
             name='price',
             field=models.IntegerField(default=0, verbose_name='Цена'),
         ),
         migrations.AddField(
-            model_name='advertisement',
+            model_name='advertisements',
             name='views_count',
             field=models.IntegerField(default=0, verbose_name='Количество просмотров'),
         ),
         migrations.AlterField(
-            model_name='advertisement',
+            model_name='advertisements',
             name='description',
             field=models.TextField(default='', null=True, verbose_name='Описание'),
         ),

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регионы</title>
+
+    {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static "/footer_elem.css" %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="main_container main_container-nav">
+            <a href="/">На главную</a>
+        </nav>
+    </header>
+    <main>
+        <div class="main_container">
+            <h1>Регионы</h1>
+            <ul>
+                {% for region in regions %}
+                    <li> {{region}} </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>        
+</body></html>

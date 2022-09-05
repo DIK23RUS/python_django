@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Категории</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static "/footer_elem.css" %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">   
+    </head>
+    <body>
+        <header>
+            <nav class="main_container main_container-nav">
+                <a href="/">На главную</a>
+            </nav>
+        </header>
+        <main>
+            <div class="main_container">
+                <h1>Случайное обьявление</h1>
+                
+                {% if random_advertisement %}
+                
+                <h2>{{random_advertisement.title}}</h2>
+                
+                <p>{{random_advertisement.description}}</p>
+                <p>Цена: {{random_advertisement.price}}</p>
+                
+                <div class="adv_datetime">
+                    <p>Дата создания: {{random_advertisement.created_at}}</p>
+                    <p>Дата обновления: {{random_advertisement.updated_at}}</p>
+                    <p>Число просмотров: {{random_advertisement.views_count}}</p>
+                </div>
+                
+                {% else %}
+                
+                <p>Объявлений нет.</p>
+                
+                {% endif %}
+                
+            </div>
+        </main>        
+    </body>
+</html>

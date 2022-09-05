@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Детальная информация</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static "/advertisement_list.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "/advertisement_detail.css" %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <nav class="main_container main_container-nav">
+                <a href="/">На главную</a>
+            </nav>
+        </header>
+        <section class="main_container">
+            <h1>{{ object.title }}</h1>
+            <p>Цена: {{ object.price }}</p>
+            <p class="description">Описание: {{ object.description }}</p>
+            <div class="info">
+                <p>Рубрика: {{ object.heading }}</p>
+                <p>Тип объявления: {{ object.type }}</p>
+            </div>
+            <p class="contact_info">Контактная информация:</p>
+            <div class="info">
+                <p>Автор: {{ object.author.name }}</p>
+                <p>Телефон: {{ object.author.phone }}</p>
+                <p>E-mail: {{ object.author.email }}</p>
+            </div>
+            <p class="count_views">Число просмотров: {{ object.views_count }}</p>
+        </section>
+    </body>
+</html>

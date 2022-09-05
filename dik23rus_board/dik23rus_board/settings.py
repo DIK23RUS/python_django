@@ -122,3 +122,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/home/dik23rus/PycharmProjects/python_django/dik23rus_board/advertisements/templates/advertisements/static/'
+
+STATICFILES_DIRS = [
+    '/home/dik23rus/PycharmProjects/python_django/dik23rus_board/advertisements/templates/advertisements/css',
+    '/home/dik23rus/PycharmProjects/python_django/dik23rus_board/advertisements/templates/advertisements/img',
+]

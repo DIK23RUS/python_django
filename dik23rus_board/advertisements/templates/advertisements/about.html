@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>О компании</title>
+
+    {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static "/footer_elem.css" %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header>
+    <nav class="main_container main_container-nav">
+        <a href="/">На главную</a>
+    </nav>
+</header>
+<div class="main_container">
+    <h1>О компании</h1>
+    <h2>{{Name}}</h2>
+    <p>{{Info}}</p>
+</div>
+</body>
+</html>
