@@ -8,7 +8,7 @@
     <h1>Products</h1>
 
     <h3>
-    <a href="../">Вернуться на главную</a>
+    <a href="{% url 'shopapp:index' %}">Вернуться на главную</a>
     </h3>
 
     {% if products %}
@@ -24,4 +24,9 @@
     {% else %}
         <h3>No products yet</h3>
     {% endif %}
+
+    <div>
+        <a href="{% url 'shopapp:create-product' %}">Создать новый товар</a>
+    </div>
+
 {% endblock %}
