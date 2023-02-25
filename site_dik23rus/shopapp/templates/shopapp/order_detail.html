@@ -1,0 +1,31 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}
+    Order #{{ object.pk }} details
+{% endblock %}
+
+{% block body %}
+    <div>
+        <p>Order by: {% firstof object.user.first_name object.user.username %}</p>
+        <p>Promocode: <code>{{ object.promocode }}</code></p>
+        <p>Delivery adress: <b>{{ object.delivery_adress }}</b></p>
+        <div>
+            Product in order:
+            <ul>
+                {% for product in order.products.all %}
+                    <li>{{ product.name }} for ${{ product.price }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div>
+        <a href="{% url 'shopapp:orders_list' %}">К списку заказов</a>
+    </div>
+    <div>
+        <a href="{% url "shopapp:order_update" pk=object.pk %}"> Редактировать заказ </a>
+    </div>
+    <div>
+        <a href="{% url "shopapp:order_delete" pk=object.pk %}"> Удалить заказ </a>
+    </div>
+{% endblock %}

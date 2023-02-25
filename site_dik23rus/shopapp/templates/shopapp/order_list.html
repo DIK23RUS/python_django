@@ -11,10 +11,11 @@
     <a href="../">Вернуться на главную</a>
     </h3>
 
-    {% if orders %}
+    {% if object_list %}
         <div>
-            {% for order in orders %}
+            {% for order in object_list %}
                 <div>
+                    <p><a href="{% url 'shopapp:order_details' pk=order.pk %}">Order #{{ order.pk }}</a></p>
                     <p>Order by: {% firstof order.user.first_name order.user.username %}</p>
                     <p>Promocode: <code>{{ order.promocode }}</code></p>
                     <p>Delivery adress: <b>{{ order.delivery_adress }}</b></p>
@@ -33,5 +34,11 @@
     {% else %}
         <h3> No orders yet</h3>
     {% endif %}
+
+    <br>
+
+    <div>
+        <a href="{% url 'shopapp:order_create' %}">Создать новый заказ</a>
+    </div>
 
 {% endblock %}
