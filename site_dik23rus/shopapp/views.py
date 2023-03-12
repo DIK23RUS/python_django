@@ -2,7 +2,7 @@ from timeit import default_timer
 
 from django.contrib.auth.models import Group
 from django.forms import CheckboxSelectMultiple
-from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
@@ -100,7 +100,7 @@ class OrderListView(LoginRequiredMixin, ListView):
 
 
 class OrderDetailsView(PermissionRequiredMixin, DetailView):
-    permission_required = "view_order"  
+    permission_required = "shopapp.view_order"
     queryset = (
         Order.objects
         .select_related("user")
@@ -210,3 +210,36 @@ def create_order(request: HttpRequest) -> HttpResponse:
     return render(request, "shopapp/create-order.html", context=context)
 
 
+class ProductsDataExportView(View):
+    def get(self, request:HttpRequest) -> JsonResponse:
+        products = Product.objects.order_by("pk").all()
+        products_data = [
+            {
+                "pk": product.pk,
+                "name": product.name,
+                "price": product.price,
+                "archived": product.archived,
+            }
+            for product in products
+        ]
+        return JsonResponse({"products": products_data})
+
+
+class OrdersDataExportView(UserPassesTestMixin, View):
+
+    def test_func(self):
+        return self.request.user.is_staff
+    def get(self, request:HttpRequest) -> JsonResponse:
+        orders = Order.objects.select_related("user").prefetch_related("products").all()
+        orders_data = [
+            {
+                "pk": order.pk,
+                "delivery_adress": order.delivery_adress,
+                "promocode": order.promocode,
+                "user": order.user.id,
+                "products": product.id,
+            }
+            for order in orders
+            for product in order.products.all()
+        ]
+        return JsonResponse({"orders": orders_data})

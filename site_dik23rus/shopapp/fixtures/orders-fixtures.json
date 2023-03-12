@@ -1,0 +1,15 @@
+[
+  {
+    "model": "shopapp.order",
+    "pk": 7,
+    "fields": {
+      "delivery_adress": "Сантьяго-Ден-Аргонио",
+      "promocode": "SAN123",
+      "created_at": "2023-02-25T14:56:36.590Z",
+      "user": 1,
+      "products": [
+        3
+      ]
+    }
+  }
+]

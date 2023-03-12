@@ -27,7 +27,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('name', 'description')
         }),
         ('Financial', {
-            'fields': ('price', 'discount'),
+            'fields': ('price', 'discount', 'created_by'),
             'classes': ('collapse', 'wide',),
         }),
         ('Extra Options', {

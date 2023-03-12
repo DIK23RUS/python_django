@@ -1869,70 +1869,88 @@ product_id</ColNames>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="607" parent="495" name="id">
+    <check id="607" parent="495">
+      <Predicate>&quot;discount&quot; &gt;= 0</Predicate>
+    </check>
+    <column id="608" parent="495" name="id">
       <AutoIncrement>1</AutoIncrement>
       <DasType>integer|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="608" parent="495" name="name">
+    <column id="609" parent="495" name="name">
       <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="609" parent="495" name="description">
+    <column id="610" parent="495" name="description">
       <DasType>text|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="610" parent="495" name="created_at">
+    <column id="611" parent="495" name="created_at">
       <DasType>datetime|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="611" parent="495" name="discount">
-      <DasType>smallint|0s</DasType>
+    <column id="612" parent="495" name="discount">
+      <DasType>smallint unsigned|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
-    </column>
-    <column id="612" parent="495" name="price">
-      <DasType>decimal|0s</DasType>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
     </column>
     <column id="613" parent="495" name="archived">
       <DasType>bool|0s</DasType>
       <NotNull>1</NotNull>
+      <Position>6</Position>
+    </column>
+    <column id="614" parent="495" name="created_by_id">
+      <DasType>integer|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <key id="614" parent="495">
+    <column id="615" parent="495" name="price">
+      <DasType>decimal|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <foreign-key id="616" parent="495">
+      <ColNames>created_by_id</ColNames>
+      <Deferrable>1</Deferrable>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <RefColNames>id</RefColNames>
+      <RefTableName>auth_user</RefTableName>
+    </foreign-key>
+    <index id="617" parent="495" name="shopapp_product_created_by_id_b8d1c056">
+      <ColNames>created_by_id</ColNames>
+    </index>
+    <key id="618" parent="495">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="615" parent="496" name="type">
+    <column id="619" parent="496" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="616" parent="496" name="name">
+    <column id="620" parent="496" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="617" parent="496" name="tbl_name">
+    <column id="621" parent="496" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="618" parent="496" name="rootpage">
+    <column id="622" parent="496" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="619" parent="496" name="sql">
+    <column id="623" parent="496" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="620" parent="497" name="name">
+    <column id="624" parent="497" name="name">
       <Position>1</Position>
     </column>
-    <column id="621" parent="497" name="seq">
+    <column id="625" parent="497" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

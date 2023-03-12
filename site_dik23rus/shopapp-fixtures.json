@@ -1,0 +1,80 @@
+[
+  {
+    "model": "shopapp.product",
+    "pk": 1,
+    "fields": {
+      "name": "Laptop",
+      "description": "",
+      "price": "1999.00",
+      "discount": 0,
+      "created_at": "2023-01-20T23:28:19.316Z",
+      "created_by": 1,
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 3,
+    "fields": {
+      "name": "Smartphone",
+      "description": "",
+      "price": "999.00",
+      "discount": 25,
+      "created_at": "2023-01-20T23:28:19.316Z",
+      "created_by": 1,
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 5,
+    "fields": {
+      "name": "OnePlus 5",
+      "description": "Смартфон для Гика",
+      "price": "1800.00",
+      "discount": 5,
+      "created_at": "2023-02-25T14:05:04.965Z",
+      "created_by": 1,
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 6,
+    "fields": {
+      "name": "Синхрофазатрон",
+      "description": "Очень нужная штука",
+      "price": "9999.00",
+      "discount": 0,
+      "created_at": "2023-03-08T21:42:36.314Z",
+      "created_by": 3,
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.product",
+    "pk": 7,
+    "fields": {
+      "name": "Тестовый товар user_3",
+      "description": "Сейчас будем проверять редактирование",
+      "price": "5555.00",
+      "discount": 0,
+      "created_at": "2023-03-09T10:31:57.633Z",
+      "created_by": 4,
+      "archived": false
+    }
+  },
+  {
+    "model": "shopapp.order",
+    "pk": 7,
+    "fields": {
+      "delivery_adress": "Сантьяго-Ден-Аргонио",
+      "promocode": "SAN123",
+      "created_at": "2023-02-25T14:56:36.590Z",
+      "user": 1,
+      "products": [
+        3
+      ]
+    }
+  }
+]
