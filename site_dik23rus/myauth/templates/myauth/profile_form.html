@@ -1,0 +1,39 @@
+{% extends "myauth/base.html" %}
+
+{% block title %}
+    About me
+{% endblock %}
+
+{% block body %}
+    <h1>
+        User info
+    </h1>
+    {% if user.is_authenticated %}
+        <h2>Detail</h2>
+        {% if object.user.profile.avatar %}
+            <div>
+                <img src="{{ object.user.profile.avatar.url }}" alt="{{ object.user.profile.avatar.name }}">
+            </div>
+        {% else %}
+            <p>Avatar not upload yet</p>
+        {% endif %}
+        <div>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Обновить аватар</button>
+            </form>
+        </div>
+        <p>Username: {{ object.user.username }}</p>
+        <p>First name: {{ object.user.first_name }}</p>
+        <p>Last name: {{ object.user.last_name }}</p>
+        <p>Bio: {{ object.user.profile.bio }}</p>
+        <p>Email: {{ object.user.email }}</p>
+    {% else %}
+        <h2>User is anonymous</h2>
+    {% endif %}
+
+    <div>
+    <a href="{% url "myauth:user-list" %}">Вернуться к списку пользователей</a>
+    </div>
+{% endblock %}

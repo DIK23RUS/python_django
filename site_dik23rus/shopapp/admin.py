@@ -2,11 +2,14 @@ from django.contrib import admin
 from django.db.models import QuerySet
 from django.http import HttpRequest
 
-from .models import Product, Order
+from .models import Product, Order, ProductImage
 
 
 class OrderInline(admin.TabularInline):
     model = Product.orders.through
+
+class ProductInline(admin.StackedInline):
+    model = ProductImage
 
 
 @admin.action(description='Archived selected products')
@@ -30,6 +33,9 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('price', 'discount', 'created_by'),
             'classes': ('collapse', 'wide',),
         }),
+        ('Images', {
+            'fields': ('preview',),
+        }),
         ('Extra Options', {
             'fields': ('archived',),
             'classes': ('collapse',),
@@ -37,6 +43,7 @@ class ProductAdmin(admin.ModelAdmin):
     )
     inlines = [
         OrderInline,
+        ProductInline,
     ]
     list_display = "pk", "name", "description_short", "price", "discount", "archived",
     list_display_links = "pk", "name"

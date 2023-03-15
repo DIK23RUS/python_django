@@ -126,10 +126,16 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'uploads'
+
+# Можно изменить тут место хранения файлов
+# DEFAULT_FILE_STORAGE =
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = reverse_lazy("myauth:about-me")
+LOGIN_REDIRECT_URL = reverse_lazy("myauth:user-list")
 LOGIN_URL = reverse_lazy("myauth:login")

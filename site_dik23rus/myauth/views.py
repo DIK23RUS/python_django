@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, reverse
@@ -7,11 +9,34 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views import View
 
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView
 from .models import Profile
 
-class AboutMeView(TemplateView):
-    template_name = "myauth/about-me.html"
+
+# class AboutMeView(TemplateView):
+# template_name = "myauth/profile_form.html"
+
+
+class UsersListView(ListView):
+    template_name = "myauth/users_list.html"
+    model = User
+    context_object_name = "users"
+
+
+class AboutMeView(UserPassesTestMixin, UpdateView):
+
+    def test_func(self):
+        return self.get_object().pk == self.request.user.pk \
+            or self.request.user.is_staff
+
+    model = Profile
+    fields = "avatar",
+
+    def get_success_url(self):
+        return reverse(
+            'myauth:about-me',
+            kwargs={'pk': self.object.pk}
+        )
 
 
 class RegisterView(CreateView):
@@ -52,7 +77,7 @@ class RegisterView(CreateView):
 #     return render(request, "myauth/login.html", {"error": "Invalid username or password"})
 
 
-def logout_view(request: HttpRequest) ->HttpResponse:
+def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
     return redirect(reverse("myauth:login"))
 
@@ -60,20 +85,24 @@ def logout_view(request: HttpRequest) ->HttpResponse:
 class MyLogoutView(LogoutView):
     next_page = reverse_lazy("myauth:login")
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def set_cookie_view(request: HttpRequest) -> HttpResponse:
     response = HttpResponse("Cookie set")
     response.set_cookie("fizz", "buzz", max_age=3600)
     return response
 
+
 def get_cookie_view(request: HttpRequest) -> HttpResponse:
     value = request.COOKIES.get("fizz", "default value")
     return HttpResponse(f"Cookie value: {value!r}")
+
 
 @permission_required("myauth.view_profile", raise_exception=True)
 def set_session_view(request: HttpRequest) -> HttpResponse:
     request.session["foobar"] = "spameggs"
     return HttpResponse("Session set!")
+
 
 @login_required
 def get_session_view(request: HttpRequest) -> HttpResponse:
@@ -82,5 +111,5 @@ def get_session_view(request: HttpRequest) -> HttpResponse:
 
 
 class FooBarView(View):
-    def get(self,request: HttpRequest) -> JsonResponse:
+    def get(self, request: HttpRequest) -> JsonResponse:
         return JsonResponse({"foo": "bar", "spam": "eggs"})
