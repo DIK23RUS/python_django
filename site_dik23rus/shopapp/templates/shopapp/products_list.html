@@ -1,11 +1,13 @@
 {% extends 'shopapp/base.html' %}
 
+{% load i18n %}
+
 {% block title %}
-    Products list
+    {% translate 'Products list' %}
 {% endblock %}
 
 {% block body %}
-    <h1>Products</h1>
+    <h1>{% translate 'Products' %}</h1>
 
     <h3>
         <a href="{% url 'shopapp:index' %}">Вернуться на главную</a>
@@ -13,11 +15,20 @@
 
     {% if products %}
         <div>
+        {% blocktranslate count products_count=products|length %}
+            There is onle one product.
+            {% plural %}
+            There are {{ products_count }} products.
+        {% endblocktranslate %}
+        </div>
+        <div>
             {% for product in products %}
                 <div>
-                    <p><a href="{% url 'shopapp:products_details' pk=product.pk %}">Name: {{ product.name }}</a></p>
-                    <p>Price: {{ product.price }}</p>
-                    <p>Discount: {% firstof product.discount 'no discount' %}</p>
+                    <p><a href="{% url 'shopapp:products_details' pk=product.pk %}">
+                        {% translate 'Name' context 'product name' %}: {{ product.name }}</a></p>
+                    <p>{% translate 'Price' %}: {{ product.price }}</p>
+                    {% translate 'no discount' as no_discount %}
+                    <p>{% translate 'Discount' %}: {% firstof product.discount no_discount %}</p>
 
                     {% if product.preview %}
                         <img src="{{ product.preview.url }}" alt="{{ product.preview.name }}">
@@ -25,13 +36,24 @@
                 </div>
             {% endfor %}
         </div>
-    {% else %}
-        <h3>No products yet</h3>
-    {% endif %}
-    {% if perms.shopapp.add_product %}
+        {% if perms.shopapp.add_product %}
         <div>
-            <a href="{% url 'shopapp:product-create' %}">Создать новый товар</a>
+            <a href="{% url 'shopapp:product-create' %}"> {% translate 'Create a new product' %}</a>
         </div>
+        {% endif %}
+    {% else %}
+        {% blocktranslate %}
+            <h3>No products yet</h3>
+        {% endblocktranslate %}
+        {% if perms.shopapp.add_product %}
+            {% url 'shopapp:product-create' as create_product %}
+            {% blocktranslate %}
+            <div>
+            <a href="{{ create_product }}">Create a new product</a>
+            </div>
+            {% endblocktranslate %}
+        {% endif %}
     {% endif %}
+
 
 {% endblock %}

@@ -7,6 +7,12 @@
 {% block body %}
     <h1>Hello Shop Index!</h1>
 
+    <div>
+    <strong>
+        You have {{ items }} cherr{{ items|pluralize:'y,ies' }}
+    </strong>
+    </div>
+
     <ul>
     <li>
         <a href="products/">Список товаров</a>
