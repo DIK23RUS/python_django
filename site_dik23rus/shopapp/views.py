@@ -8,9 +8,56 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Product, Order, ProductImage
 from .forms import CreateProductForm, CreateNewOrderForm, GroupForm, ProductForm
+from .serializers import ProductSerializer, OrderSerializer
+
+
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [
+        SearchFilter,
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+    search_fields = ["name", "description"]
+    filterset_fields = [
+        "name",
+        "description",
+        "price",
+        "discount",
+        "archived",
+    ]
+    ordering_fields = [
+        "name",
+        "price",
+        "description",
+    ]
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    filter_backends = [
+        DjangoFilterBackend,
+        OrderingFilter,
+    ]
+    filterset_fields = [
+        "delivery_adress",
+        "promocode",
+        "created_at",
+        "user",
+    ]
+    ordering_fields = [
+        "user",
+        "products",
+        "created_at",
+    ]
+
 
 
 class ShoppIndexView(View):
@@ -42,6 +89,7 @@ class GroupsView(View):
             form.save()
         return redirect(request.path)
 
+
 # def groups_list(request: HttpRequest):
 #     context = {
 #         "groups": Group.objects.prefetch_related('permissions').all(),
@@ -54,6 +102,7 @@ class ProductDeteilsView(DetailView):
     # model = Product
     queryset = Product.objects.prefetch_related("images")
     context_object_name = "product"
+
 
 # class ProductDeteilsView(View):
 #     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
@@ -69,6 +118,7 @@ class ProductListView(ListView):
     # model = Product
     context_object_name = "products"
     queryset = Product.objects.filter(archived=False)
+
 
 # class ProductListView(TemplateView):
 #     template_name = "shopapp/products_list.html"
@@ -109,16 +159,17 @@ class OrderDetailsView(PermissionRequiredMixin, DetailView):
         .prefetch_related("products")
     )
 
+
 class OrderCreateView(CreateView):
     model = Order
     fields = "delivery_adress", "promocode", "user", "products"
     success_url = reverse_lazy('shopapp:orders_list')
 
+
 class OrderUpdateView(UpdateView):
     model = Order
     fields = "delivery_adress", "promocode", "user", "products"
     template_name_suffix = "_update_form"
-
 
     def get_success_url(self):
         return reverse(
@@ -150,7 +201,7 @@ class ProductUpdateView(UserPassesTestMixin, PermissionRequiredMixin, UpdateView
     permission_required = "shopapp.change_product"
 
     def test_func(self):
-        return self.get_object().created_by == self.request.user\
+        return self.get_object().created_by == self.request.user \
             or self.request.user.is_superuser
 
     model = Product
@@ -173,6 +224,7 @@ class ProductUpdateView(UserPassesTestMixin, PermissionRequiredMixin, UpdateView
             )
         return response
 
+
 class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy('shopapp:products_list')
@@ -182,6 +234,7 @@ class ProductDeleteView(DeleteView):
         self.object.archived = True
         self.object.save()
         return HttpResponseRedirect(success_url)
+
 
 # def create_product(request: HttpRequest) -> HttpResponse:
 #     if request.method == 'POST':
@@ -222,7 +275,7 @@ def create_order(request: HttpRequest) -> HttpResponse:
 
 
 class ProductsDataExportView(View):
-    def get(self, request:HttpRequest) -> JsonResponse:
+    def get(self, request: HttpRequest) -> JsonResponse:
         products = Product.objects.order_by("pk").all()
         products_data = [
             {
@@ -240,7 +293,8 @@ class OrdersDataExportView(UserPassesTestMixin, View):
 
     def test_func(self):
         return self.request.user.is_staff
-    def get(self, request:HttpRequest) -> JsonResponse:
+
+    def get(self, request: HttpRequest) -> JsonResponse:
         orders = Order.objects.select_related("user").prefetch_related("products").all()
         orders_data = [
             {
