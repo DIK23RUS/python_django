@@ -29,6 +29,7 @@
         <option value="$MODULE_DIR$/site_dik23rus/shopapp/templates" />
         <option value="$MODULE_DIR$/site_dik23rus/requestdataapp/templates" />
         <option value="$MODULE_DIR$/site_dik23rus/myauth/templates" />
+        <option value="$MODULE_DIR$/site_dik23rus/blogapp/templates" />
       </list>
     </option>
   </component>
