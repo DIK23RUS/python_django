@@ -1,6 +1,8 @@
 asgiref==3.6.0
 attrs==23.2.0
+certifi==2024.7.4
 Django==4.2.5
+django-debug-toolbar==4.3.0
 django-filter==23.3
 djangorestframework==3.14.0
 docutils==0.20.1
@@ -19,6 +21,8 @@ pytz==2023.3.post1
 PyYAML==6.0.1
 referencing==0.33.0
 rpds-py==0.18.0
+sentry-sdk==2.11.0
 snowballstemmer==2.2.0
 sqlparse==0.4.3
 uritemplate==4.1.1
+urllib3==2.2.2

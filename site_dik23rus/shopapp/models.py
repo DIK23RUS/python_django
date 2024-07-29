@@ -17,12 +17,12 @@ class Product(models.Model):
 
     Заказы тут: :model:`shopapp.Order`
     """
+
     class Meta:
         verbose_name = _('Product')
         verbose_name_plural = _('products')
         ordering = ["name"]
         # db_table = "tech_products"
-
 
     name = models.CharField(max_length=100, db_index=True)
     description = models.TextField(null=False, blank=True, db_index=True)
@@ -42,11 +42,13 @@ class Product(models.Model):
     def __str__(self) -> str:
         return f"Product(pk={self.pk}, name={self.name!r})"
 
+
 def product_images_directory_path(instance: "ProductImage", filename: str) -> str:
     return "products/product_{pk}/images/{filename}".format(
         pk=instance.product.pk,
         filename=filename,
     )
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="images")
@@ -55,7 +57,6 @@ class ProductImage(models.Model):
 
 
 class Order(models.Model):
-
     class Meta:
         verbose_name = _('Order')
         verbose_name_plural = _('orders')
