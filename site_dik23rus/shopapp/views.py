@@ -14,6 +14,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.contrib.syndication.views import Feed
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -336,3 +337,18 @@ class OrdersDataExportView(UserPassesTestMixin, View):
             for product in order.products.all()
         ]
         return JsonResponse({"orders": orders_data})
+
+
+class LatestProductsFeed(Feed):
+    title = "Products news"
+    description = "Updates product list"
+    link = reverse_lazy("shopapp:products_list")
+
+    def items(self):
+        return Product.objects.filter(archived=False).order_by("-created_at")[:5]
+    
+    def item_title(self, item:Product):
+        return item.name
+    
+    def item_description(self, item:Product):
+        return item.description

@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+    <li>
+        <a href="{% url 'admin:admin_product_csv' %}" class="addlink" name="product">Import CSV</a>
+    </li>
+
+    {{ block.super}}
+{% endblock %}

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'django.contrib.sitemaps',
 
     'rest_framework',
     'django_filters',
@@ -74,8 +75,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     # 'requestdataapp.middlewares.setup_useragent_on_request_middleware',
-    'requestdataapp.middlewares.CountRequestsMiddleware',
-    'requestdataapp.middlewares.ThrottlingMiddleware',
+    # 'requestdataapp.middlewares.CountRequestsMiddleware',
+    # 'requestdataapp.middlewares.ThrottlingMiddleware',
     'django.contrib.admindocs.middleware.XViewMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]

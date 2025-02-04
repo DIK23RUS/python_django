@@ -44,3 +44,7 @@ class ProductForm(forms.Form):
     images = forms.ImageField(
         widget=forms.ClearableFileInput(attrs={"multiple": False})
     )
+
+
+class CSVImportform(forms.Form):
+    csv_file = forms.FileField()

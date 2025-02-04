@@ -1,2 +1,2 @@
-2024-07-29 16:23:01,394 [INFO] django.utils.autoreload /home/dik23rus/PycharmProjects/python_django/site_dik23rus/site_dik23rus/settings.py changed, reloading.
-2024-07-29 16:23:01,609 [INFO] django.utils.autoreload Watching for file changes with StatReloader
+2025-02-04 19:42:35,589 [INFO] django.utils.autoreload /home/dik23rus/PycharmProjects/python_django/site_dik23rus/shopapp/admin.py changed, reloading.
+2025-02-04 19:42:35,979 [INFO] django.utils.autoreload Watching for file changes with StatReloader
