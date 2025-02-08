@@ -1,0 +1,37 @@
+{% extends 'shopapp/base.html' %}
+{% load cache %}
+
+{% block title %}
+    Заказы покупателя {{ buyer.username}}
+{% endblock %}
+
+{% block body %}
+    <h3>
+        <a href="{% url 'shopapp:buyers_list' %}" >Вернуться к списку покупателей</a>
+    </h3>
+
+    <h1>Заказы покупателя: {{ buyer.username }}</h1>
+    {% cache 120 buyer_orders buyer.pk %}
+        {% if orders %}
+            <ul>
+                {% for order in orders %}
+                    <li>
+                        <p>Заказ №{{ order.id }}</p>
+                        <p>Дата создания заказа: {{ order.created_at }}</p>
+                        <p>Адрес доставки: {{ order.delivery_adress }}</p>
+                        <p>Промокод: {{ order.promocode }}</p>
+
+                        <ul>
+                            {% for product in order.products.all %}
+                                <li>{{ product.name }}: {{ product.price }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+                <a href="{% url 'shopapp:buyer_order_export' pk=buyer.pk %}">Экспортировать данные</a>
+            </ul>
+        {% else %}
+            <p>У этого покупателя пока нет заказов.</p>
+        {% endif %}
+    {% endcache %}
+{% endblock %}

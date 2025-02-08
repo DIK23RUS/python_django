@@ -1,0 +1,27 @@
+{% extends 'shopapp/base.html' %}
+
+{% block title %}
+    Список покупателей
+{% endblock %}
+
+{% block body %}
+    <h3>
+        <a href="{% url 'shopapp:index' %}">Вернуться на главную</a>
+    </h3>
+
+    {% if buyers %}
+        <h1>Список покупателей</h1>
+
+        <ul>
+            {% for buyer in buyers %}
+                <li>
+                    <p>Имя: {{ buyer.get_full_name|default:buyer.username }} </p>
+                    <p>Количество заказов: {{ buyer.order_count }}</p>
+                    <a href="{% url 'shopapp:buyer_order_list' pk=buyer.pk %}">Список заказов покупателя</a>
+                </li>
+            {% endfor%}
+        </ul>
+    {% else %}
+    <h1>Еще нет покупателей оформивших заказ.</h1>
+    {% endif%}
+{% endblock %}

@@ -6,6 +6,9 @@
 import logging
 from timeit import default_timer
 
+from django.core.cache import cache
+from django.contrib.auth.models import User
+from django.db.models import Count
 from django.contrib.auth.models import Group
 from django.forms import CheckboxSelectMultiple
 from django.http import HttpResponse, HttpRequest, HttpResponseRedirect, JsonResponse
@@ -15,6 +18,9 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.syndication.views import Feed
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
@@ -352,3 +358,47 @@ class LatestProductsFeed(Feed):
     
     def item_description(self, item:Product):
         return item.description
+    
+
+class BuyerListView(LoginRequiredMixin, ListView):
+    model = User
+    template_name = "shopapp/buyers_list.html"
+    context_object_name = "buyers"
+
+    def get_queryset(self):
+        return User.objects.annotate(
+            order_count=Count("order")
+        ).filter(order_count__gt=0)
+    
+
+class BuyerOrdersListView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = "shopapp/buyers_orders.html"
+    context_object_name = "orders"
+
+    def get_queryset(self):
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        return Order.objects.filter(user=user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['buyer'] = get_object_or_404(User, pk=self.kwargs['pk'])
+        return context
+    
+
+class BuyerOrdersListExportView(LoginRequiredMixin, APIView):
+    def get(self, request, pk):
+        
+        cache_key = f"user_orders_export_{pk}"
+
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return Response(cached_data)
+        
+        user = get_object_or_404(User, pk=pk)
+
+        orders = Order.objects.filter(user=user).order_by('id')
+        serializer = OrderSerializer(orders, many=True)
+        cache.set(cache_key, serializer.data, timeout=120)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

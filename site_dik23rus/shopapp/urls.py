@@ -19,6 +19,9 @@ from .views import (ShoppIndexView,
                     ProductViewSet,
                     OrderViewSet,
                     LatestProductsFeed,
+                    BuyerListView,
+                    BuyerOrdersListView,
+                    BuyerOrdersListExportView,
                     )
 
 app_name = "shopapp"
@@ -43,6 +46,9 @@ urlpatterns = [
     path("orders/export/", OrdersDataExportView.as_view(), name="orders-export"),
     path("orders/<int:pk>/update/", OrderUpdateView.as_view(), name="order_update"),
     path("orders/<int:pk>/delete/", OrderDeleteView.as_view(), name="order_delete"),
-    path("products/latest/feed", LatestProductsFeed(), name="products-feed"),
+    path("products/latest/feed/", LatestProductsFeed(), name="products-feed"),
+    path("buyers/", BuyerListView.as_view(), name="buyers_list"),
+    path("buyers/<int:pk>/", BuyerOrdersListView.as_view(), name="buyer_order_list"),
+    path("buyers/<int:pk>/export/", BuyerOrdersListExportView.as_view(), name="buyer_order_export"),
     # path("orders/create/", create_order, name="create-order"),
 ]

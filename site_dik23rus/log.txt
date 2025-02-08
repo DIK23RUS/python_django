@@ -1,2 +1,3 @@
-2025-02-04 19:42:35,589 [INFO] django.utils.autoreload /home/dik23rus/PycharmProjects/python_django/site_dik23rus/shopapp/admin.py changed, reloading.
-2025-02-04 19:42:35,979 [INFO] django.utils.autoreload Watching for file changes with StatReloader
+2025-02-08 20:20:14,808 [INFO] django.utils.autoreload /home/dik23rus/PycharmProjects/python_django/site_dik23rus/shopapp/views.py changed, reloading.
+2025-02-08 20:20:15,032 [INFO] django.utils.autoreload Watching for file changes with StatReloader
+2025-02-08 20:21:34,469 [WARNING] django.request Not Found: /ru/shop/buyers/15/export/

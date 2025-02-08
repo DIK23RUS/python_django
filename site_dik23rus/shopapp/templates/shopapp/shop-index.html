@@ -7,6 +7,15 @@
 {% block body %}
     <h1>Hello Shop Index!</h1>
 
+    <ul>
+        <li>
+            <a href="{% url 'myauth:logout' %}">Выйти</a>
+        </li>
+        <li>
+            <a href="{% url 'myauth:login' %}">Войти</a>
+        </li>
+    </ul>
+
     <div>
     <strong>
         You have {{ items }} cherr{{ items|pluralize:'y,ies' }}
@@ -20,6 +29,11 @@
     <li>
         <a href="orders/">Список заказов</a>
     </li>
+    {% if user.is_authenticated %}
+    <li>
+        <a href="buyers/">Список покупателей</a>
+    </li>
+    {% endif %}
     </ul>
 
 {% endblock %}
